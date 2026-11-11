@@ -38,13 +38,13 @@ BiocManager::install("airway")
 library(airway)
 data(airway)
 airway
-assay(airway)[1:3, 1:4] #okuma sayıları
-colData(airway)        # hangi örnek tedavi gördü, hangisi görmedi
+assay(airway)[1:3, 1:4] 
+colData(airway)       
 #ExperimenSet'te konumlar verilemz sadece isimleri vardır ancak SummarizedExperiment her satıra bir genomik aralık eklenebilir.
 #Aynı genin birden fazla adı vardır bu yüzden bunları tek isime çevirmek için aşağıdakiler kullanılır.
 library(org.Hs.eg.db)
-keytypes(org.Hs.eg.db)         # elindeki anahtar türleri
-columns(org.Hs.eg.db)          # isteyebileceğin bilgiler
+keytypes(org.Hs.eg.db)         
+columns(org.Hs.eg.db)          
 # birden fazla bilgi tek tabloda
 select(org.Hs.eg.db, keys = c("TP53", "BRCA1"),
        columns = c("ENTREZID", "ENSEMBL", "GENENAME"),
@@ -52,9 +52,9 @@ select(org.Hs.eg.db, keys = c("TP53", "BRCA1"),
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 
-g  <- genes(txdb)                       # gen aralıkları (GRanges)
+g  <- genes(txdb)                       # GRanges
 tx <- transcripts(txdb)                 # transkriptler
-ex <- exonsBy(txdb, by = "gene")        # her genin eksonları (GRangesList)
+ex <- exonsBy(txdb, by = "gene")        # GRangesList
 pr <- promoters(g, upstream = 2000, downstream = 200)   # promotör bölgeleri
 library(ERBS); data(HepG2)
 
@@ -79,7 +79,6 @@ tt  <- rowttests(e[, ind], factor(tissue[ind]))   # her probe için t-testi
 sum(tt$p.value < 0.05)                            # düzeltmesiz
 sum(p.adjust(tt$p.value, "bonferroni") < 0.05)   # Bonferroni
 sum(p.adjust(tt$p.value, "BH") < 0.05)           # FDR
-# Beklenen: 100 * 500 / 20000 = 2.5
 tab <- matrix(c(15, 485, 85, 19415), nrow = 2,
               dimnames = list(c("kumede", "kumede_degil"),
                               c("anlamli", "anlamsiz")))
